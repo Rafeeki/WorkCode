@@ -1,0 +1,198 @@
+Unit 0.1
+	1) Human Thought = Write a Program in High Level Language
+	2) Compiler turns High Level Language into VM Code
+	3) VM Translator turns VM Code into Low Level Code
+	4) Assembler turns Low Level Code into Computer Architecture
+		a. Assembler is link between Software and Hardware
+	5) Computer Architecture affects CPU/RAM/chipset via Digital Design
+	6) CPU/RAM/Chipset affect Elementary Logic Gates via Gate Logic
+	7) Elementary Logic Gates affect electricity via Electrical Engineering
+Unit 0.2
+	• Main Secret of Computer Science: DON'T WORRY ABOUT THE HOW… IT'S ENOUGH TO WORRY ABOUT THE WHAT!!!
+		○ How = implementation, What = Abstraction (Each level 1-7 above)
+		○ Abstraction = What our programming language promises to do
+		○ Separation of Concerns: Don't worry about the "how", either somebody else will or you will have in the past/will do in the future
+		○ At each layer of the stack, forget the implementation and remember only the interface as you climb up the stack
+	• Each week: Worry about a single level, take the lower level as given, implement the higher level, test that it works, move on to the next level
+Unit 0.3: Bottom up to Assembler
+	• Electrical Engineering + Logic = NAND Logic Gate
+		○ NAND, Not, And, Or, Xor, Mux, Dmux, Not16, And16, Or16, Mux16, Or8Way, Mux4Way16, Mux8Way16, DMux4Way, DMux8Way
+	• NAND logic gate + Combinational Logic = Elementary Logic Gates & Arithmetic-Logic Unit
+		○ HalfAdder, FullAdder, Add16, Inc16, ALU
+	• ELG + Comb Logic + Sequential Logic (time and clocks) = Registers/CPU/RAM/chipset
+		○ Bit, Register, RAM8, RAM64, RAM512, RAM4K, RAM16K, PC
+	• CPU/RAM/Chipset + Digital Design = Computer Architecture (Hack)
+		○ Memory, CPU, Computer
+	• Hack + Assembler = Low Level Language
+Unit 0.4: Assembler up to Human Thought
+	• Build assembly (source) language to talk to hardware
+		○ Generates binary code
+	• Programmers want to work with high level language
+		○ Loops, data types, classes, methods, i/o, math etc.
+	• Will build a high level language, a compiler for it, a standard library and a mini-operating system
+	• Part II: The Elements of Computing Systems by teachers
+Unit 1.1: Boolean Logic to Truth Tables
+	• Computers internally only have 0s and 1s because it's simplest, they can get away with it
+	• Boolean values: On/Off, True/False, Yes/No, 0/1
+	• AND = 1 only if both x and y are 1
+		○ x^y, x AND y
+	• OR = 1 if either x or why are 1, 0 only if both x and y are 0
+		○ x^y but upside down carrot
+	• NOT = 1 if x is 0, 0 if x is 1
+		○ Lower case gamma x
+	• Evaluate booleans from the inside out using communicative/distributive properties
+	• De Morgan Laws
+		○ NOT(x OR y) = NOT(x) AND NOT(y)
+		○ NOT(x AND y) = NOT(x) OR NOT(y)
+Unit 1.2: Truth Tables to Boolean Functions
+	• When you design a computer, need to work backwards from truth table to boolean expression
+		○ Go row by row where function = 1, determine expression for each
+		○ OR all the expressions together, and simplify
+		○ Not trivial to find the simplest, easiest final expression
+	• ANY Boolean function can be represented using an expression containing AND and NOT operations
+		○ (x OR y) = NOT( NOT(x) AND NOT(y) ) 
+		○ Combined with NAND function: (x NAND y) = NOT(x AND y)
+			§ (0,0) = 1; (0,1) = 1; (1,0) = 1; (1,1) = 0
+	• ANY Boolean function can be represented using NAND gates
+		○ NOT(x) = (x NAND x)
+		○ (x AND y) = NOT(x NAND y) = (x NAND x)(x NAND y)
+		○ The entire computer can be built off of NAND operations
+Unit 1.3: Logic Gates
+	• Elementary Gates (Nand, Not, Or, And,…)
+		○ NAND: if (a==1 and b==1) then out =0 else out=1
+		○ AND: if(a==1 and b==1) then out=1 else out=0
+		○ OR: if(a==1 or b==1) then out=1 else out=0
+		○ Not: if(in=0) then out=1 else out=0
+	• Composite Gates (Mux, Adder, etc.) are gates made up of Elementary Gates (Nand, Not, Or, And,…)
+		○ Triple AND: if(a==1 and b==1 and c==1) then out=1 else out=0
+			§ One AND whose output becomes an input for a second AND
+			§ Interface (logic statement) vs. Implementation (hardware): Order of inputs into the gates matters!!! 
+				□ Implementation is Electrical Engineering, not Computer Science
+	• Circuit Implementations
+		○ AND = two switches/relays in series
+		○ OR = two switches/relays in parallel
+Unit 1.4: Hardware Description Language
+	• As gate architect, start from requirements and work towards interface
+		○ XOR: if(a != b) then out = 1 else out = 0
+			§ (NOT(a) AND b) OR (a AND NOT(b))
+			§ CHIP Xor {
+				IN a,b;
+				OUT out;
+				
+				PARTS:
+				NOT (in=a, out=nota);
+				NOT (in=b, out=notb);
+				And (a=a, b=notb, out=aAndNotb);
+				And (a=nota, b=b, out=notaAndb);
+				Or (a=aAndNotb, b=notaAndb, out=out);
+			}
+	• HDL is a functional, declarative language
+		○ No procedure/program execution going on - just a static description of the gate diagram
+		○ Hardware simulator takes description and pipes values from bottom to end
+	• Order of HDL statements is insignificant
+		○ Procedural part is external to the code
+	• Must know a chip's interface before using it as a part
+	• Connections like partName(a=a,…) and partName(…,out=out) are common, make sense based on diagrams, and are convenient from programming perspective
+	• VHDL, Verilong, are Common HDLs, the one in this course is minimal and simple, perfect for the course
+Unit 1.5: Hardware Simulation
+• Given an HDL file, test it in a Hardware Simulator (java) interactively or with test script (script-based) or with output/compare files - this course uses all three and this unit walks us through all 3
+• Hardware Construction Project - after proving design using high level languages
+	• System architect - looks at overall desired functionality of project, breaks it down into exactly what chips are needed
+		○ Creates for each chip: 1) a chip API, 2) a test script 3) a compare file
+	• Developers - builds the chips (us) designed by the architect (instructors)
+Unit 1.6: Multi-Bit Buses
+• Dealing with a bunch of bits together - trivial but worth covering
+• Convenient to think of a bunch of bits manipulated together as a single entity called a "bus" (one layer of abstraction)
+• Ex. 4-bit adder: IN=a[4], IN=b[4],OUT=out[4]
+	• AND(a=a[0], b=b[0], out=[0]);
+	• AND(a=a[1], b=b[1], out=[1]); etc.
+• Ex. Sub-buses: IN lsb[8], msb[8]
+	• AND16(a[0..7]=lsb, a[8..15]=msb, out[0..3]=t1,out[4..15]=t2);
+• Interface Declaration for a chip: IN c, Bus1[16], Bus2[16]; OUT out, out2[16];
+	• Add16(a=Bus1[0..15],b=Bus2[0..15],out[0..14]=out2[0..14]);	OR
+	Add16(a=true, b=false, out=out2);	
+Ch 1: Chip types
+• Multiplexor (=A if sel = 0, =B if sel = 1): 
+	• Three-input gate that uses a "selection bit" to select and output one of other two inputs
+	• Adopted from comms systems, where similar devices are used to serialize (multiplex) several input signals over a single output wire
+Ch 2:
+• Binary addition requires a "carry" bit when adding two 1s (sum = Xor, carry = And)
+• Binary subtraction accomplished with 2's complement 
+	• X = 4 = 0100, -X = -4 = 2^n-X = 16-4 = 12 = 1100 = -4
+	• Easiest way to tell is if MSB = 1, number is negative
+•  Hardware thinking vs. Software thinking
+	• Hardware: create both outputs, and then choose between them with Mux
+	• Software: use if/then statements to choose between outputs
+• Creating an ALU: decide output functions first, then work back to control inputs
+Ch 3:
+Sequential Logic:
+• Ch1&2 ignored issue of time
+	• Inputs were just "there" - fixed and unchanging, output was instantaneous and just a function of input (called Combinational logic)
+	• Want to (re)use same hardware over time, so inputs can change and outputs still process
+	• Also to remember "state" for memory & counters, adding intermediate sums
+	• Need, at some point, to deal with speed and know how fast the computer can run 
+• Use discrete time - a clock alternating between 0 and 1 - instead of physical, continuous time that's hard to define
+	• Nothing changes in between integer time units (0 and 1), only once the next one occurs
+		○ Reason why CS doesn't consider delays due to current building and voltage curves
+	• OVERCLOCKING IS A BIG DEAL BECAUSE IT'S THE LOWEST LEVEL OF THE COMPUTER THAT CAN BE IMPROVED SINCE THE HARDWARE IS STATIC AND TOO SMALL TO MANUALLY CHANGE
+Ch. 4: Memory
+Flip Flops
+• Gates that can change state by remembering the input from the last time unit and outputting it at the next time unit (out[t] = in[t-1])
+	• Little triangle at bottom of the diagram denotes it's a sequential chip (depends on time)
+• Built from NAND gate with these steps:
+	1) Create a "loop" achieving an "un-clocked" flip flip - has gates amplifying same signal again
+	2) Isolation across time steps using a "master-slave" setup
+• Don't remember that. It's easy to confuse combinatorial and sequential gates
+• Input -> Combinatorial logic f -> array of DFFs -> output -> state[t] = f(input, state[t-1])
+• 1-bit Register = remembers an input bit "forever" - until requested to load a new value
+	• Bit() = chip has two inputs (in & load) and remembers load (1) until the next (1) from load when it becomes (0)
+	• No time history at time unit 1 so no output until time unit 2
+• Working "Bit" Implementation uses Mux to take DFF in and DFF out (recycled) based on "load"
+	• Mux picks previous output from the old value of the DFF, but switches to 0 when load is (1)
+Memory Units
+• Main memory = memory actually in the computer hardwired into the motherboard (RAM)
+• Secondary memory = disks, etc.
+• Volatile = disappears when plug pulled on computer (RAM), non/volatile = stays even w/o power
+• RAM = used to store data on which programs operate and instructions that are the building blocks of the programs themselves
+• Word width = w = 16-bit, 32-bit, 64-bit (just focus on 16-bit in this course)
+• Register's state = the value currently stored inside the register
+	• To read the Register: probe out
+	• Result: out emits the Register's state
+• To write a new value to the register: set in = v , set load = 1
+	• Result: register's state becomes "v", and out emits "v" from the next cycle until changed
+RAM
+	1) DMux the load into an array directed by the addresses
+	2) Apply that DMux'd load to the array of Registers
+	3) Mux the array of Register outputs with the address to get the true output
+• Same with higher n RAMs, just use low n RAMs in place of Registers and send LSB of address along
+Ch. 4: Machine Language
+• Machine language is the binary instructions that affect the hardware
+	• Assembly language is symbolic representations of the binary that can be translated with a text parser (aka a compiler) down to machine language before being fed to the CPU
+• LOADI handles indirect addressing and pointers - if a variable holds a memory location, it is used as an intermediate stop in the program to obtain that location
+• Devices (printer/screen/mouse) communicate with the CPU via protocols called drivers that are hosted in the registry
+• D solely stores data values
+• A doubles as a data register and an address register… interpreted as:
+	• Data value: number 516
+	• Address in data memory: address 100100110011101
+	• Address in instruction memory: "goto A" when A = 516 for a jump operation
+• M is an implicit memory location - the memory word whose address is the current value of A
+• Address instruction: @value stores value in A
+	• Only way to enter a constant into the computer under program control
+	• Sets stage for subsequent C-instruction designed to manipulate a data memory location A
+	• Sets stage for C-instruction that specifies a jump to address A
+• Compute instruction: answers what to compute, where to store the computed value, and what next?
+	• Dest = comp; jump
+		○ If dest is empty, omit the "=" (11th, 12th, 13th bit of 16 digit address) - see Fig 4.4
+		○ If jump is empty, omit the ";" (14th, 15th, 16th bit of 16 digit address) - see Fig 4.5
+		○ Comp is an a-bit (4th digit) and six c-bits (5th-10th digits) that give the ALU instructions - see Fig 4.3
+Ch. 5: Computer Architecture
+• Stored program concept - program's code is stored/manipulated in the computer memory just like data i.e. software
+• Turing Machine - abstract artifact used to analyze the logical foundations of computer systems
+• Von Neumann Machine - practical architecture and conceptual blueprint of all computer platforms
+	• CPU (containing an ALU, registers and Control) receives data from an Input, communicates with Memory (containing data and instructions) and sends data to some Output
+• Memory-mapped I/O - make all I/O devices look exactly the same to the computer
+	• For inputs, the exclusive memory area (memory map) continuously reflects the physical state of the device
+	• For outputs, the memory map continuously drives the physical state of the device
+	• Whenever we connect a new I/O device to the computer, we allocate a new memory map and take note of its base address (one-time configurations typically done by the OS)
+• ROM = instruction memory = read-only device preburned with the required programs
+	• ROM address input connected to Program Counter (PC) chip output so the ROM always emits the current instruction, ROM[PC], or the contents of the instruction memory location whose address the PC is pointing at

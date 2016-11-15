@@ -1,0 +1,549 @@
+Section 1.1.1 Vocab
+	• Communication links - different types of physical media including coaxial cable, copper wire, optical fiber and radio spectrum that transmit data at different rates
+	• Transmission rate - speed of a communication link measured in bits/second
+	• Packet - packages of information created when one end system segments the data to be sent and adds header bytes to each segment before sending them through the network to the destination end system, where they are reassembled into the original data
+	• Packet switch - takes a packet arriving on an incoming communication link and forwards it on one of its outgoing communication links
+	• Link-layer switch - a type of packet switch typically used in access networks
+	• Router - a type of packet switch typically used in the network core
+	• Route/Path - the sequence of communication links and packet switches traversed by a packet from sending end system to receiving end system
+	• Internet Service Providers (ISPs) - end systems access the Internet via these networks of packet switches and communication links. ISPs provide residential (local cable/telephone companies) broadband access like cable modem or DSL, high-speed local area network access, wireless access, 56 kbps dial-up modem access, or corporate, university, or public Wifi-based access.
+		○ Lower-tier ISPs are interconnected through national and international upper-tier ISPs such as Level 3 Communications, AT&T, etc. which consist of high-speed routers interconnected with high-speed fiber-optic links. 
+		○ All ISP networks are managed independently, run the IP protocol and conform to certain naming/address conventions
+	• Protocols - control the sending and receiving of information within the Internet
+		○ Transmission Control Protocol (TCP) and Internet Protocol (IP) form the Internet's principal protocols TCP/IP
+		○ IP specifies the format of the packets that are sent and received among routers and end systems
+	• Internet standards - developed by the Internet Engineering Task Force (IETF)
+		○ IEEE 802 LAN/MAN Standards Committee specifies the Ethernet and wireless WiFi standards
+	• Request for comments (RFCs) - the IETF standards documents that started off as general requests for comments to resolve network/protocol design problems that faced the precursor to the Internet
+		○ Define protocols such as TCP/IP, HTTP (for the web), and SMTP (for e-mail)
+Section 1.1.2
+	• Internet can also be described as an infrastructure that provides services to applications
+		○ To start, write programs that run on the end systems in Java/C/Python/etc., but still need the programs running on the different end systems to send data to each other
+	• Distributed Applications - those that involve multiple end systems that exchange data with each other instead of running in the packet switches in the network core
+		○ i.e. e-mail, web surfing, social networks, instant messaging, voice-over-IP (VoIP), video streaming, distributed games, peer-to-peer (P2P) file sharing, television over the internet, remote login, etc.
+	• Application Programming Interface (API) - specification provided by end systems attached to the Internet for how a program running on one end system asks the Internet infrastructure to deliver data to a specific destination program running on another end system
+		○ Analogous to the "postal service API" rules like putting a letter in an envelope, writing the name and address on it, putting a stamp on it, and dropping it into an official postal service mailbox
+			§ Postal service also provides different levels of service, so does the Internet
+Section 1.1.3
+	• In networking, it takes two (or more) communicating entities running the same protocol to accomplish a task.
+		○ Hardware-implemented protocols in two physically connected computers control the flow of bits on the "wire" between two network interface cards
+		○ Congestion-control protocols in end systems control the rate at which packets are transmitted between sender and receiver
+		○ Router protocols determine a packet's path from source to destination
+	• A protocol defines the format/order of messages exchanged between two or more communicating entities, as well as the actions taken on the transmission and/or receipt of a message/event.
+		a. Type url into web browser
+		b. Computer sends connection request to web server
+		c. Server returns connection reply message to computer
+		d. Computer sends the name of the web page (url) in a GET message
+		e. Web server returns the web page (file) to your computer
+Section 1.2
+	• Hosts - another name for end systems that run application programs such as a web browser, a web server, an e-mail client or an e-mail server
+		○ Clients - desktop/mobile PCs, smartphones, etc.
+		○ Servers - more powerful machines that store and distribute web pages, stream video, relay e-mail, etc. that reside in large data centers
+			§ Google has 30-50 data centers each with >100k servers
+Section 1.2.1
+	• Access networks - that which physically connects an end system to the first (edge) router on a path from the end system to any other distant end system
+	• Digital Subscriber Line (DSL) - residential broadband Internet access typically obtained from the same telephone company that provides the wired local phone access, making the telco also the ISP.
+		○ DSL modems uses the existed telephone line (twisted-pair copper wire) to exchange data with a digital subscriber line access multiplexer (DSLAM) located in the telco's local central office
+		○ DSL modem takes digital data, translates it to high-frequency tones for transmission at the splitter over telephone wires to the CO where the analog signals are translated back into digital format at the DSLAM
+			§ 50 kHz - 1 MHz band = High-speed downstream channel
+			§ 4 kHz - 50 kHz band = medium-speed upstream channel
+			§ 0 kHz - 4 kHz = ordinary two-way telephone channel
+		○ DSL standards define transmission rates of 12 Mbps downstream and 1.8 Mbps upstream, and 24 Mbps downstream and 2.5 Mbps upstream
+			§ Asymmetric access - different downstream/upstream transmission rates
+			§ Actual rates may be less than standard due to purposeful limits based on price or due to limits imposed by distance between home and CO, gauge of twisted-pair line and degree of electrical interference
+				□ DSL designed for short distances (5-10 miles) of CO
+	• Cable Internet Access - makes use of cable television company's existing cable television infrastructure (i.e. fiber optics connecting the cable head end to neighborhood-level junctions, and coaxial cable from there to individual homes) instead of telephone lines
+		○ Each neighborhood junction supports 500-5000 homes
+		○ Hybrid fiber coax (HFC) - systems using both fiber and coaxial cable
+		○ Cable modem - external device connecting to home PC through an Ethernet port, dividing the HFC network into asymmetric downstream and upstream channels
+			§ DOCSIS 2.0 standard defines downstream rates up to 42.8 Mbps and upstream up to 30.7 Mbps… limited by lower contracted data rates or media impairments
+		○ Cable modem termination system (CMTS) - turns the analog signal sent from cable modems in downstream homes through the HFC cable into digital format at the cable head end
+		○ Shared broadcast medium because every packet sent by the head end travels downstream on every link to every home, and every packet sent by a home travels on the upstream channel to the head end
+			§ Downstream channel - many users means slower aggregate rate, but few users means full aggregate rate
+			§ Upstream channel - distributed multiple access protocol is needed to coordinate transmissions and avoid collisions
+	• Fiber to the Home (FTTH) - optical fiber path from the CO directly to the home, in opposition to the 90% of residential broadband that is currently DSL/cable networks
+		○ Direct fiber - simplest optical distribution network with one fiber leaving the CO for each home
+		○ Active optical networks (AONs) - essentially switched Ethernet with fiber splitting into individual customer-specific fibers after leaving the CO
+		○ Passive optical networks (PONs) - each home uses a home router to connect to an optical network terminator (ONT) which is connected by dedicated optical fiber to a neighborhood splitter, which combines a number of homes (<100) onto a single shared optical fiber, which connects to an optical line terminator (OLT) in the telco's CO, which provides conversion between optical and electrical signals, which connects to the internet via a telco router
+			§ Used in Verizon's FIOS service
+			§ All packets sent from the OLT are replicated at the splitter (analogous to a cable head end)
+		○ Potentially provides Internet access rates in the gigabits/second, though the average downstream speed was approximately 20 Mbps in 2011
+	• StarBand/HughesNet - provide satellite link access for residences to the Internet at speeds > 1 Mbps
+	• Dial-up access - provides Internet access over traditional phone lines with a home modem connecting to a modem in the ISP at 56 kbps
+	• Ethernet - use a twisted-pair copper wire to connect to an Ethernet switch (or a network of switches) which is then connected to the larger Internet where users have 100 Mbps access and servers have 1-100 Gbps access
+		○ Most prevalent access technology in corporate, university and home local area networks (LAN)
+	• Wireless - users transmit/receive packets from an access point (within tens of meters) that is connected to the enterprise's network (which likely includes wired Ethernet)
+		○ WiFi = wireless LAN access based on IEEE 802.11 technology that is available just about everywhere providing a shared transmission rate of 54 Mbps
+	• Typical Home - Internet connects to cable head end which enters the home and connects to the modem which translates the signal and passes it on to the router which connects over Ethernet to a stationary desktop and also to a wireless access point which can communicate over WiFi to a wireless laptop/smartphone/etc.
+	• Wide-Area Wireless Access - same wireless infrastructure used for cellular telephony to send/receive packets through a base station for a user within a few tens of kilometers with speeds of 1 Mbps (3G), 10 Mbps (4G) or greater (LTE)
+Section 1.2.2
+	• Physical medium - path between each transmitter-receiver pair through which a bit is sent by propagating electromagnetic waves or optical pulses
+		○ Does not have to be the same type for each pair along the path, examples include twisted-pair copper wire (DSL/Ethernet), coaxial cable (HFC), multimode fiber-optic cable (FTTH), terrestrial radio spectrum (Wireless), and satellite radio spectrum (StarBand/HughesNet)
+		○ Guided media - waves are guided along a solid medium, such as a fiber-optic cable, a twisted-pair wire or a coaxial cable
+		○ Unguided media - waves propagate in the atmosphere and in outer space, such as in a wireless LAN or a digital satellite channel
+		○ Labor cost associated with installing physical medium can be orders of magnitude higher than the cost of the material itself, so many builders install twisted pair, optical fiber AND coaxial cable in every room in a building to save money on future labor if a medium switch were to happen
+	• Twisted-pair copper wire - consists of two insulated copper wires, each about 1mm thick, arranged in a rectangular spiral pattern to reduce the electrical interference from similar pairs close by
+		○ least expensive and most commonly used guided transmission medium, used by telephone networks for >100 years and still making up 99% of wired connections from telephone handset to the local telephone switch
+		○ Unshielded twisted pair (UTP) - commonly used for computer networks within a building (i.e. LANs) providing data rates from 10 Mbps to 10 Gbps depending on wire thickness and transmitter-receiver distance
+		○ Category 6a cable can achieve data rates of 10 Gbps for distances up to 100 meters, making it the dominant solution for high-speed LAN networking despite the 1980s beliefs of fiber-optic bit rate superiority
+	• Coaxial cable - two concentric copper conductors (rather than parallel like twisted-pair) that can achieve high data transmission rates with special insulation and shielding
+		○ Common in cable television systems, and in residential Internet systems when coupled with cable modems that allow for rates of 10s of Mbps
+		○ Transmitter shifts the digital signal to a specific frequency band, and the resulting analog signal is sent from the transmitter to one or more receivers
+		○ Can be used as a guided shared medium - a number of end systems can be connected directly to the cable, with each of the end systems receiving what is sent by the other end systems
+	• Optical fiber - a thin, flexible medium that conducts pulses of light that represent bits, with a single optical fiber supporting up to tens or hundreds of Gbps that is immune to electromagnetic interference, has very low signal attenuation up to 100 km and are very hard to tap, making it the preferred long-haul guided transmission media (particularly for overseas links
+		○ Optical devices - transmitters, receivers and switches for fiber are very expensive, which has hindered their deployment for short-haul transport (i.e. LAN or residential homes) though fiber does for the backbone of the Internet and many long-distance telephone networks
+		○ Optical Carrier standard link speeds range from 51.8 Mbps to 39.8 Gbps, and are denoted OC-n where n represents a multiplier on 51.8 Mbps (e.g. OC-1, OC-3, OC-12, OC-24, OC-48, OC-96, OC-192, OC-768)
+	• Terrestrial Radio Channels - carry signals in the electromagnetic spectrum, which is attractive because they don't require physical wire, can penetrate walls, provide mobile connectivity and can potentially carry a signal for long distances
+		○ However there are certain environmental considerations that affect a radio channels characteristics
+			§ Path loss and shadow fading - both of which decrease signal strength as the signal travels over a distance and through obstructing objects
+			§ Multi-path fading - due to signal reflection off of interfering objects
+			§ Interference - due to other transmissions and electromagnetic signals
+		○ Three groups of radio channels:
+			§ Very short distance (within one or two meters) for wireless headsets, keyboards and medical devices
+			§ Local area (spanning from ten to a few hundred meters) for wireless LAN technologies
+			§ Wide area (spanning tens of kilometers) for cellular access technologies
+	• Satellite Radio Channels - communication satellites link two or more ground stations (Earth-based microwave transmitter/receivers) by receiving transmissions on one frequency band, regenerating the signal using a repeater, and transmitting the signal on another frequency
+		○ Geostationary satellites - permanently remain above the same spot on Earth due to their orbital altitude of 36,000 km, which causes substantial signal propagation delay of 280 milliseconds, but can still provide hundreds of Mbps Internet access for areas without DSL or cable-based Internet access 
+		○ Low-earth orbiting (LEO) satellites - lower orbits that geostationary satellites, so they rotate around the Earth, allowing for communication both with ground stations and with other LEO satellites, which is needed since many satellites will need to be placed in orbit in order to provide coverage to an area
+Section 1.3
+	• Messages - exchanged by end systems that can contain anything an application designer wants like performing a control function or containing data
+	• Packets - messages broken down by the source end system into smaller chunks of data
+	• Packet switches - what packets travel through between source and destination, in addition to communication links
+		○ Routers and link-layer switches
+		○ T (packet transmission time) = L (packet bit size) / R (link transmission rate bits/sec)
+			§ Total Delay T = 2*L/R for a source to send bit, the router to transmit the entire packet, and the destination to receive it
+		○ Store-and-forward transmission - used by most packet switches at the inputs to the links, where a switch cannot transmit the first bit of the packet onto the outbound link until the entire packet has been received and stored, or buffered
+			§ Delay d = N (number of links) * L/R, where there are N-1 routers between source and destination
+	• Output buffer/queue - the part of the packet switch that stores packets that the router is about to send into an attached link
+		○ Queuing delays - suffered by arriving packets that must wait in the output buffer if the link is busy with the transmission of another packet, timing is variable and dependent on the level of congestion in the network
+		○ Packet loss - occurs when the output buffer is full and another packet arrives, either the arriving packet or one of the already-queued packets will be dropped
+			§ If, during a short internal of time, the arrival rate of packets to the router exceeds the distribution rate of packets from the router to the link then congestion will occur at the router as packets queue in the link's output buffer before being transmitted onto the link
+	• Packet forwarding - in the internet, every end system has an address called an IP address, so when a source end system wants to send a packet to the destination end system it needs to include the destination's IP address in the packet's header. The router examines a portion of the packet's destination address and forwards the packet to an adjacent router
+		○ Forwarding table - table in each router that maps destination addresses (or portions of them) to that router's outbound links
+		○ Analogous to a car driver who asks for directions at each stop instead of using a map
+		○ Routing protocols - used by the Internet to automatically set a router's forwarding tables, some determine the shortest path from each router to each destination and use that path to configure each router's forwarding tables
+		○ www.traceroute.org
+Section 1.3.2
+	• Circuit Switching - approach to moving data through a network of links and switches where the resources along a path (i.e. buffers, link transmission rate) to provide for communication between the end systems are reserved for the duration of the communication session between the end systems (opposite of packet switching)
+		○ Analogous to reserving a table at a restaurant before showing up and sitting right down, instead of (packet switching) showing up unannounced and risking having to wait, or not having a table at all
+		○ Circuit - bona fide connection for which the switches on the path between sender and receiver maintain connection state for that connection, like traditional telephone networks
+			§ Once established, allows a guaranteed constant transmission rate in the network's links (representing a fraction of each link's transmission capacity) for the duration of the sender-to-receiver connection
+		○ End-to-end connection - established when two hosts that are directly connected to switches want to communicate, reserving say 1/4 circuits per switch that results in a 250 kbps dedicated transmission rate out of the possible total 1 Mbps transmission rate of each link
+		○ Frequency-division multiplexing (FDM) - the link dedicates a specific frequency band within its frequency spectrum to each connection established across the link for the duration of that connection
+			§ Bandwidth - width of a band, typically 4 kHz in telephone networks
+			§ Used by FM radio stations to share the frequency spectrum between 88 MHz and 108 MHz
+		○ Time-division multiplexing (TDM) - when a network establishes a connection across a link, it dedicates one time slot (of a fixed number per frame) in every frame (of fixed duration) for the sole use of that connection to transmit the connection's data
+			§ Transmission rate of a circuit (64 kbps) = Frame Rate (8000 frames/second) * # bits/slot (8)
+		○ Arguments against:
+			§ Silent periods - dedicated circuits are idle during these, e.g. when one person in a phone call stops talking
+			§ Establishing end-to-end circuits and reserving end-to-end transmission capacity is complicated and requires complex signaling software to coordinate the operation of the switches along the end-to-end path
+			§ Packet switching offers better sharing of transmission capacity and is simpler, more efficient and less costly to implement… offers essentially the same performance as circuit switching but does so while allowing for more than 3 times the number of users, unless all those users are simultaneously active
+		○ Arguments for:
+			§ Transmission time is independent of the number of links
+			§ Better for real-time services because no variable/unpredictable end-to-end delays due to queuing like packet switching
+Section 1.3.3
+	• Network Structure 1 (singleTier-1 ISP)
+		○ Access ISPs - connect end systems into the internet by wired (DSL, cable, FTH) or wireless (Wi-Fi, cellular, satellite) connectivity… acts as a customer
+		○ Tier-1 ISPs - companies like AT&T, Sprint and NTT that are capable of getting close to each and every access ISP and find it economically desirable to do so… acts as a provider 
+	• Network Structure 2 (multiple Tier-1 ISP)
+	• Network Structure 3
+		○ Regional ISPs - acts as a provider to a group of Access ISPs in its region, and a customer to the Tier-1 ISPs
+	• Network Structure 4
+		○ Point of Presence (PoP) - a group of one or more routers (at the same location) in the provider's network where customer ISPs can connect into the provider ISP by leasing a high-speed link from a 3rd party telecom provider to directly connect one of its routers to a router at the PoP
+		○ Multi-home - connect to two or more provider ISPs to send and receive packets into the Internet even if one of its providers has a failure
+		○ Peer - to directly connect the networks of two nearby ISPs at the same level of hierarchy so that all the traffic between them passes over the direct connection rather than through upstream intermediaries (typically settlement-free)
+		○ Internet Exchange Point (IXP) - a meeting point created by a third-party company where multiple ISPs can peer together… roughly 300 in the Internet today
+	• Network Structure 5 (roughly describes Internet of 2012)
+		○ Content provider networks - privately owned networks of globally distributed data centers all interconnected via TCP/IP and separate from the public Internet, only carrying traffic to/from the private servers, that attempt to bypass the upper tiers of the Internet by peering (settlement free, either directly or at IXPs) with lower-tier ISPs
+Section 1.4.1 - Overview of Delay 
+	• Total nodal delay = Nodal processing delay + queuing delay + transmission delay + propagation delay
+		○ Suffered at each node (host or router) along the path from source to destination
+		○ Processing delay = time required to examine the packet's header and determine where to direct it, time needed to check for bit-level errors in the packet in transmission (typically microseconds)
+			§ Typically negligible, though it strong influences a router's maximum throughput
+		○ Queuing delay = time a packet waits to be transmitted onto the link, length depending on the number of earlier-arriving packets already queued, which is a function of the intensity and nature of the traffic arriving at the queue (typically micro-milliseconds)
+		○ Transmission delay = L (packet length) / R (transmission rate) (typically micro-milliseconds)
+			§ Typically negligible for transmission rates > 10 Mbps, but can be tenths of seconds for large packets sent over low-speed dial-up modem links
+		○ Propagation delay = d (nodal distance) / s (propagation speed), or the time required for a bit to travel from the beginning of the link to the next node, where propagation speed depends on the physical medium of the link (2-3 x 10^8 m/s)  (typically milliseconds)
+			§ Different from transmission delay because that only deals with the packet itself, instead of the distance between routers
+			§ Negligible for a link connecting two routers on the same university campus, but tenths of seconds for a geostationary satellite link 
+Section 1.4.2 - Queuing Delay and Packet Loss
+	• Queuing delay - differs from packet to packet, depending on a packets position in the queue (i.e. the first packet suffers no delay, while the last packet suffers a long delay waiting for the earlier packets to transmit)
+		○ Typically characterized by statistical measures such as average queuing delay, variance and probability of exceeding a specified balue
+	• Traffic intensity = L (packet size in bits) * a (average packet arrival rate in packets/s) / R (transmission rate bits/s)
+		○ Design your system so that the traffic intensity is no greater than 1
+			§ Otherwise a > R and queuing delay will approach infinity as the queue size increases without bound
+		○  If La/R <= 1, queueing delay depends on nature of arriving traffic
+			§ Periodically (one packet every ~L/R seconds) means no delay
+			§ In bursts (N packets every (L/R)*N seconds) means (n-1)*L/R delay for the nth packet transmitted
+	• Packet loss - occurs when a packet arrives at a link to find a full queue (capacity dependent upon router design and cost), where the router has no place to store the packet, so it is dropped and is lost
+		○ Probability of packet loss is a useful measurement for performance at a node
+Section 1.4.3 - End-to-End Delay 
+	• End-to-End Delay = N (host + # of routers) * (proc delay + prop delay + trans delay)
+	○ For example, an end system wanting to transmit a packet into a shared medium (e.g., as in a WiFi or cable modem scenario) may purposefully delay its transmission as part of its protocol for sharing the medium with other end systems
+Section 1.4.4 - Throughput
+	• Media packetization delay = present in Voiceover-IP (VoIP) applications where the sending side must first fill a packet with encoded digitized speech before passing the packet to the Internet 
+		○ Packetization delay = time to fill a packet, which can be significant and impact the user-perceived quality of a VoIP call.
+	• Instantaneous throughput = rate [bits/s] at which Host B is receiving the file, often displayed during downloads
+	• Average throughput = F [number of bits a file consists of] / T [# of seconds for Host B to receive all F bits]
+	• Transmission rate of the bottleneck link = min{Rc, Rs} for this simple two-link network
+		○ Rs = rate at which bits continue to arrive at the router 
+		○ Rc = rate at which bits continue to leave the router 
+		○ If Rs > Rc, the backlog of bits at the router waiting for transmission to the client will grow and grow—a most undesirable situation!)
+		○ Therefore, the constraining factor for throughput in today's Internet is typically the access network
+	• More generally the throughput depends not only on the transmission rates of the links along the path, but also on the intervening traffic. In particular, a link with a high transmission rate may nonetheless be the bottleneck link for a file transfer if many other data flows are also passing through that link
+Section 1.5.1 - Layered Architecture
+	• Each layer provides its service by (1) performing certain actions within that layer (for example, at the gate layer, loading and unloading people from an airplane) and by (2) using the services of the layer directly below it (for example, in the gate layer, using the runway-to-runway passenger transfer service of the takeoff/landing layer).
+	• For large and complex systems that are constantly being updated, the ability to change the implementation of a service without affecting other components of the system is another important advantage of layering.
+	• A protocol layer can be implemented software, in hardware, or in a combination of the two. 
+		○ Application-layer protocols (such as HTTP and SMTP) always implemented in software in the end systems; so are transport-layer protocols. 
+		○ Because the physical layer and data link layers are responsible for handling communication over a specific link, they are typically implemented in a network interface card (for example, Ethernet or WiFi interface cards) associated with a given link. 
+		○ The network layer is often a mixed implementation of hardware and software.
+	• One potential drawback of layering is that one layer may duplicate lower-layer functionality. For example, many protocol stacks provide error recovery on both a per-link basis and an end-to-end basis. 
+	• A second potential drawback is that functionality at one layer may need information (for example, a timestamp value) that is present only in another layer; this violates the goal of separation of layers.
+	• Internet Protocol Stack = five layers: the physical, link, network, transport, and application layers
+		○ Application layer = where network applications and their application-layer protocols reside. The Internet’s application layer includes many protocols, such as the HTTP protocol (which provides for Web document request and transfer), SMTP (which provides for the transfer of e-mail messages), and FTP (which provides for the transfer of files between two end systems). 
+			§ Certain network functions, such as the translation of human-friendly names for Internet end systems like www.ietf.org to a 32-bit network address, are also done with the help of a specific application-layer protocol, namely, the domain name system (DNS)
+			§ It is very easy to create and deploy our own new application-layer protocols.
+			§ Message = packets of information exchanged between applications of multiple end systems
+		○ Transport layer = transports application-layer messages between application endpoints using one of two protocols (TCP or UDP)
+			§ TCP = provides a connection-oriented service to its applications, including guaranteed delivery of application-layer messages to the destination and flow control (that is, sender/receiver speed matching). Also breaks long messages into shorter segments and provides a congestion-control mechanism, so that a source throttles its transmission rate when the network is congested
+			§ UDP = provides a connectionless service to its applications. This is a no-frills service that provides no reliability, no flow control, and no congestion control
+			§ Segment = a transport-layer packet
+		○ Network Layer = responsible for moving network layer packets (datagrams) from one host to another
+			§ The Internet transport-layer protocol (TCP or UDP) in a source host passes a transport-layer segment and a destination address to the network layer, just as you would give the postal service a letter with a destination address. The network layer then provides the service of delivering the segment to the transport layer in the destination host
+			§ includes the celebrated IP Protocol, which defines the fields in the datagram as well as how the end systems and routers act on these fields
+			§ also contains routing protocols that determine the routes that datagrams take between sources and destinations. The Internet has many routing protocols. As we saw in Section 1.3, the Internet is a network of networks, and within a network, the network administrator can run any routing protocol desired
+		○ Link Layer = routes a datagram through a series of routers between source and destination
+			§ To move a packet from one node (host or router) to the next node in the route, the network layer relies on the services of the link layer. In particular, at each node, the network layer passes the datagram down to the link layer, which delivers the datagram to the next node along the route. At this next node, the link layer passes the datagram up to the network layer
+			§ Examples of linklayer protocols include Ethernet, WiFi, and the cable access network’s DOCSIS protocol. As datagrams typically need to traverse several links to travel from source to destination, a datagram may be handled by different link-layer protocols at different links along its route.
+			§ Frames = a link-layer packet
+		○ Physical Layer = the job of the physical layer is to move the individual bits within the frame from one node to the next
+			§ The protocols in this layer are again link dependent and further depend on the actual transmission medium of the link (for example, twisted-pair copper wire, single-mode fiber optics
+	• OSI Reference Model = application layer, presentation layer, session layer, transport layer, network layer, data link layer, and physical layer
+		○ Presentation Layer = provide services that allow communicating applications to interpret the meaning of data exchanged. These services include data compression and data encryption (which are self-explanatory) as well as data description (which, as we will see in Chapter 9, frees the applications from having to worry about the internal format in which data are represented/stored—formats that may differ from one computer to another)
+		○ Session Layer = provides for delimiting and synchronization of data exchange, including the means to build a checkpointing and recovery scheme
+		○ Both layers missing from Internet, so it’s up to the application developer to decide if a service is important, and if the service is important, it’s up to the application developer to build that functionality into the application
+Section 1.5.2 - Encapsulation
+	• Link-layer switches implement layers 1 and 2; routers implement layers 1 through 3. This means, for example, that Internet routers are capable of implementing the IP protocol (a layer 3 protocol), while link-layer switches are not
+	• Note that hosts implement all five layers; this is consistent with the view that the Internet architecture puts much of its complexity at the edges of the network
+	• Encapsulation = at the sending host, an application-layer message (M in Figure 1.24) is passed to the transport layer. In the simplest case, the transport layer takes the message and appends additional information (so-called transport-layer header information, Ht in Figure 1.24) that will be used by the receiver-side transport layer. The application-layer message and the transport-layer header information together constitute the transport-layer segment. The transport-layer segment thus encapsulates the application-layer message. The added information might include information allowing the receiver-side transport layer to deliver the message up to the appropriate application, and error-detection bits that allow the receiver to determine whether bits in the message have been changed in route. The transport layer then passes the segment to the network layer, which adds network-layer header information (Hn in Figure 1.24) such as source and destination end system addresses, creating a network-layer datagram. The datagram is then passed to the link layer, which (of course!) will add its own link-layer header information and create a link-layer frame. Thus, we see that at each layer, a packet has two types of fields: header fields and a payload field. The payload is typically a packet from the layer above
+Section 1.6 - Networks under Attack
+	• Malware = malicious stuff that can also enter and infect our devices
+		○ Botnet = network of thousands of similarly compromised devices which the bad guys control and leverage for spam email distribution or distributed denial-of-service attacks (soon to be discussed) against targeted hosts
+		○ Self-replicating = much of the malware, where once it infects one host, from that host it seeks entry into other hosts over the Internet, and from the newly infected hosts, it seeks entry into yet more hosts. In this manner, self-replicating malware can spread exponentially fast. 
+		○ Viruses = malware that require some form of user interaction to infect the user’s device
+		○ Worms = malware that can enter a device without any explicit user interaction. For example, a user may be running a vulnerable network application to which an attacker can send malware. In some cases, without any user intervention, the application may accept the malware from the Internet and run it, creating a worm. The worm in the newly infected device then scans the Internet, searching for other hosts running the same vulnerable network application. When it finds other vulnerable hosts, it sends a copy of itself to those hosts
+		○ Denial-of-service (DoS) attacks = renders a network, host, or other piece of infrastructure unusable by legitimate users. Web servers, e-mail servers, DNS servers (discussed in Chapter 2), and institutional networks can all be subject to DoS attacks.
+			§ Vulnerability attack = sending a few well-crafted messages to a vulnerable application or operating system running on a targeted host. If the right sequence of packets is sent to a vulnerable application or operating system, the service can stop or, worse, the host can crash
+			§ Bandwidth flooding = the attacker sends a deluge of packets to the targeted host—so many packets that the target’s access link becomes clogged, preventing legitimate packets from reaching the server.
+				□ if the server has an access rate of R bps, then the attacker will need to send traffic at a rate of approximately R bps to cause damage. If R is very large, a single attack source may not be able to generate enough traffic to harm the server. Furthermore, if all the traffic emanates from a single source, an upstream router may be able to detect the attack and block all traffic from that source before the traffic gets near the server. In a distributed DoS (DDoS) attack, illustrated in Figure 1.25, the attacker controls multiple sources and has each source blast traffic at the target. With this approach, the aggregate traffic rate across all the controlled sources needs to be approximately R
+			§ Connection flooding = the attacker establishes a large number of half-open or fully open TCP connections (TCP connections are discussed in Chapter 3) at the target host. The host can become so bogged down with these bogus connections that it stops accepting legitimate connections.
+		○ Packet sniffer = passive receiver that records a copy of every packet that flies by
+			§ Difficult to detect because they do not inject packets into the channel. So, when we send packets into a wireless channel, we must accept the possibility that some bad guy may be recording copies of our packets. As you may have guessed, some of the best defenses against packet sniffing involve cryptography
+		○ IP spoofing = injecting packets into the Internet with a false source address, one of many ways in which one user can masquerade as another user
+			§ End-point authentication =  a mechanism that will allow us to determine with certainty if a message originates from where we think it does
+		○ the Internet was originally designed to be insecure, based on the model of “a group of mutually trusting users attached to a transparent network” where there is no need for security
+			§ Many aspects of the original Internet architecture deeply reflect this notion of mutual trust. For example, the ability for one user to send a packet to any other user is the default rather than a requested/granted capability, and user identity is taken at declared face value, rather than being authenticated by default
+Section 1.7 - History of Computer networking and the Internet
+	• The telephone network uses circuit switching to transmit information from a sender to a receiver—an appropriate choice given that voice is transmitted at a constant rate between sender and receiver.
+	• Bursty traffic = intervals of activity, such as the sending of a command to a remote computer, followed by periods of inactivity while waiting for a reply or while contemplating the received response. 
+	• Three research groups around the world, each unaware of the others’ work, began inventing packet switching as an efficient and robust alternative to circuit switching. 
+		○ Leonard Kleinrock = work elegantly demonstrated the effectiveness of the packet-switching approach for bursty traffic sources using queuing theory in 1961
+		○ Paul Baran = at the Rand Institute had begun investigating the use of packet switching for secure voice over military networks In 1964
+		○ Donald Davies and Roger Scantlebury = and at the National Physical Laboratory in England, were also developing their ideas on packet switching in 1964
+	• On Labor Day in 1969, the first packet switch was installed at UCLA under Kleinrock’s supervision, and three additional packet switches were installed shortly thereafter at the Stanford Research Institute (SRI), UC Santa Barbara, and the University of Utah (Figure 1.26).
+		○ Kleinrock recalls the very first use of the network to perform a remote login from UCLA to SRI, crashing the system
+	• The first host-to-host protocol between ARPAnet end systems, known as the network-control protocol (NCP), was completed [RFC 001]. With an end-to-end protocol available, applications could now be written. 
+		○ Ray Tomlinson wrote the first e-mail program in 1972.
+	• Pioneering work on interconnecting networks (under the sponsorship of the Defense Advanced Research Projects Agency (DARPA)), in essence creating a network of networks, was done by Vinton Cerf and Robert Kahn [Cerf 1974]; the term internetting was coined to describe this work. These architectural principles were embodied in TCP. The early versions of TCP, however, were quite different from today’s TCP. The early versions of TCP combined a reliable in-sequence delivery of data via end-system retransmission (still part of today’s TCP) with forwarding functions (which today are performed by IP). Early experimentation with TCP, combined with the recognition of the importance of an unreliable, non-flow-controlled, end-to-end transport service for applications such as packetized voice, led to the separation of IP out of TCP and the development of the UDP protocol. The three key Internet protocols that we see today—TCP, UDP, and IP—were conceptually in place by the end of the 1970s.
+	• The ALOHA protocol [Abramson 1970] was the first multiple-access protocol, allowing geographically distributed users to share a single broadcast communication medium (a radio frequency). Metcalfe and Boggs built on Abramson’s multiple-access protocol work when they developed the Ethernet protocol [Metcalfe 1976] for wire-based shared broadcast networks. Interestingly, Metcalfe and Boggs’ Ethernet protocol was motivated by the need to connect multiple PCs, printers, and shared disks
+	• In the late 1980s, important extensions were made to TCP to implement host-based congestion control [Jacobson 1988]. The DNS, used to map between a human-readable Internet name (for example, gaia.cs.umass.edu) and its 32-bit IP address, was also developed
+	• The Minitel became a huge success in 1984 when the French government gave away a free Minitel terminal to each French household that wanted one. Minitel sites included free sites—such as a telephone directory site—as well as private sites, which collected a usage-based fee from each user. At its peak in the mid 1990s, it offered more than 20,000 services, ranging from home banking to specialized research databases. The Minitel was in a large proportion of French homes 10 years before most Americans had ever heard of the Internet.
+	• The Web was invented at CERN by Tim Berners-Lee between 1989 and 1991 [Berners-Lee 1989], based on ideas originating in earlier work on hypertext from the 1940s by Vannevar Bush [Bush 1945] and since the 1960s by Ted Nelson [Xanadu 2012]. Berners-Lee and his associates developed initial versions of HTML, HTTP, a Web server, and a browser—the four key components of the Web
+	• Internet's four killer apps by the end of the millennium (2000)
+		○ E-mail, including attachments and Web-accessible e-mail 
+		○ The Web, including Web browsing and Internet commerce 
+		○ Instant messaging, with contact lists 
+		○ Peer-to-peer file sharing of MP3s, pioneered by Napster 
+		○ Interestingly, the first two killer applications came from the research community, whereas the last two were created by a few young entrepreneurs.
+Section 1.7.5 - The New Millennium
+	• Online service providers, such as Google and Microsoft, have deployed their own extensive private networks, which not only connect together their globally distributed data centers, but are used to bypass the Internet as much as possible by peering directly with lower-tier ISPs. As a result, Google provides search results and email access almost instantaneously, as if their data centers were running within one’s own computer.
+Section 2.1 - Principles of Network Applications
+	• Web application - two distinct programs that communicate with each other: the browser program running in the user’s host (desktop, laptop, tablet, smartphone, and so on); and the Web server program running in the Web server host. 
+		○ e.g. in a P2P file-sharing system there is a program in each host (similar or identical) that participates in the file-sharing community. 
+		○ When developing your new application, you need to write software that will run on multiple end systems, not on network core devices (routers or link-layer switches)
+	• Before diving into software coding, you should have a broad architectural plan for your application.
+	• Network architecture - fixed, from the application developer’s perspective, providing a specific set of services to applications.
+	• Application architecture - designed by the application developer, dictating how the application is structured over the various end systems, generally one of two predominant paradigms
+		○ Client-server architecture - an always-on host, called the server, which services requests from many other hosts, called clients (which do not directly communicate with each other)
+			§ Server has a fixed, well-known address (called the IP address), so a client can always contact the server by sending a packet to the server’s IP address
+			§ Data center - houses a large number of hosts used to create a powerful virtual server
+		○ Peer-to-peer (P2P) architecture - application exploits direct communication between peers (pairs of intermittently connected hosts) that are not owned by the service provider, but are instead desktops and laptops controlled by users
+			§ Self-scability - allowed because of minimal (or no) reliance on dedicated servers in data centers, so although each peer generates workload by requesting files, each peer also adds service capacity to the system by distributing files to other peers
+			§ Cost effective, since they normally don’t require significant server infrastructure and server bandwidth
+			§ Three challenges:
+				1) ISP Friendly - Most residential ISPs (including DSL and cable ISPs) have been dimensioned for “asymmetrical” bandwidth usage, that is, for much more downstream than upstream traffic. But P2P video streaming and file distribution applications shift upstream traffic from servers to residential ISPs, thereby putting significant stress on the ISPs. Future P2P applications need to be designed so that they are friendly to ISPs
+				2) Security - Because of their highly distributed and open nature, P2P applications can be a challenge to secure 
+				3) Incentives - The success of future P2P applications also depends on convincing users to volunteer bandwidth, storage, and computation resources to the applications, which is the challenge of incentive design
+Section 2.1.2 - Processes Communicating
+	• Processes - a program that is running within an end system, able to communicate with each other with interprocess communication, using rules that are governed by the end system’s operating system, when processes are running on the same end system In the jargon of operating systems
+		○ It is not actually programs but processes that communicate. 
+		○ Messages - processes on two different end systems communicate with each other by exchanging these across the computer network. A sending process creates and sends messages into the network; a receiving process receives these messages and possibly responds by sending messages back.
+		○ Client - process that initiates the communication 
+		○ Server - process that waits to be contacted to begin the session
+	• Socket - software interface where a process sends messages into, and receives messages from
+		○ A process is analogous to a house and its socket is analogous to its door. 
+		○ The interface between the application layer and the transport layer within a host, or the Application Programming Interface (API) between the application and the network, since the socket is the programming interface with which network applications are built. 
+		○ The application developer has control of everything on the application-layer side of the socket 
+		○ The only control that the application developer has on the transport-layer side is (1) the choice of transport protocol and (2) perhaps the ability to fix a few transport-layer parameters such as maximum buffer and maximum segment sizes
+	• IP Address - a 32-bit quantity that acts as the host's identifier in the Internet
+		○ In addition to knowing the address of the host to which a message is destined, the sending process must also identify the receiving process (or socket) running in the host.
+		○ Port number - serves the above purpose by having popular applications assigned specific port numbers. 
+			§ For example, a Web server is identified by port number 80. A mail server process (using the SMTP protocol) is identified by port number 25. A list of well-known port numbers for all Internet standard protocols can be found at http://www.iana.org.
+ Section 2.1.3 - Transport Services Available to Applications
+	• Reliable data transfer - a guaranteed data delivery service provided by a protocol to support applications where data loss can have devastating consequences
+	• Loss-tolerant applications - those that find it acceptable to use transport-layer protocol without reliable data transfer, allowing for some of the data sent by the sending process to never arrive at the receiving process
+		○ e.g. Multimedia applications such as conversational audio/video where lost data might result in a small glitch in the audio/video—not a crucial impairment.
+	• Guaranteed available throughput at some specified rate - the application could request a guaranteed throughput of r bits/sec, and the transport protocol would then ensure that the available throughput is always at least r bits/sec.
+		○ If the transport protocol cannot provide this throughput, the application would need to encode at a lower rate (and receive enough throughput to sustain this lower coding rate) or may have to give up, since receiving, say, half of the needed throughput is of little or no use to this Internet telephony application. 
+	• Bandwidth-sensitive applications - applications that have throughput requirements 
+		○ Many current multimedia applications, although some may use adaptive coding techniques to encode digitized voice or video at a rate that matches the currently available throughput.
+	• Elastic applications - make use of as much, or as little, throughput as happens to be available, like e-mail, file transfer, and Web transfers
+	• Security - in the sending host, a transport protocol can encrypt all data transmitted by the sending process, and in the receiving host, the transport-layer protocol can decrypt the data before delivering the data to the receiving process. Such a service would provide confidentiality between the two processes, even if the data is somehow observed between sending and receiving processes.
+Section 2.1.4 - Transport Services Provided by the Internet 
+	• Transport requirements:
+	
+	Application	Data Loss	Throughput	Time-sensitive
+	File transfer/download	No loss	Elastic	No
+	E-mail	No loss	Elastic	No
+	Web documents	No loss	Elastic (<5 kbps)	No
+	Internet telephony	Loss-tolerant	5 kbps < t < 1 Mbps	Yes: 100s of ms
+	Video Conferencing	Loss-tolerant	10 kbps < t < 5 Mbps	Yes: 100s of ms
+	Streaming stored audio/video	Loss-tolerant	Same as above	Yes: few seconds
+	Interactive games	Loss-tolerant	5 kbps < t < 10 kbps	Yes: 100s of ms
+	Instant messaging	No loss	Elastic	Yes and no
+	• The Internet (and, more generally, TCP/IP networks) makes two transport protocols available to applications, UDP and TCP. When you (as an application developer) create a new network application for the Internet, one of the first decisions you have to make is whether to use UDP or TCP.
+		○ Unencrypted - data that sending process passes into its socket is the same as the data that ravels over the network to the destination process
+		○ TCP - has the client and server exchange transport layer control information with each other before the application-level messages begin to flow. 
+			§ Handshaking procedure - alerts the client and server, allowing them to prepare for an onslaught of packets. 
+				□ A TCP connection is said to exist between the sockets of the two processes after the handshaking phase
+			§ Full-duplex connection - the two processes can send messages to each other over the connection at the same time. When the application finishes sending messages, it must tear down the connection.
+			§ Secure Sockets Layer (SSL) - TCP enhancement (applied in application layer) that provides critical process-to-process security services, including encryption, data integrity and endpoint authentication
+				□ SSL code (existing, optimized libraries and classes) must be included in both client and server sides of the application
+				□ Sending process passes cleartext data to the SSL socket, which encrypts the data and passes it to the sending TCP socket, which passes it over the Internet to the receiving TCP socket, which passes it to the SSL socket which decrypts the data and passes the cleartext to the receiving process
+			§ Reliable data transfer service - all data is sent without error and in the proper order
+			§ Congestion-control mechanism - throttles a sending process when network is congested between sender and receiver, and limits each TCP connection to its fair share of network bandwidth
+		○ UDP - a no-frills, lightweight transport protocol, providing minimal services. 
+			§ Connectionless - no handshaking before the two processes start to communicate. 
+			§ Unreliable data transfer service - when a process sends a message into a UDP socket, UDP provides no guarantee that the message will ever reach the receiving process or if they will arrive in order. 
+			§ No congestion-control mechanism - the sending side of UDP can pump data into the layer below (the network layer) at any rate it pleases.
+				□ However, the actual end-to-end throughput may be less than this rate due to the limited transmission capacity of intervening links or due to congestion).
+		○ In summary, today’s Internet can often provide satisfactory service to time-sensitive applications, but it cannot provide any timing or throughput guarantees.
+			§ Applications often work fairly well because they have been designed to cope, to the greatest extent possible, with this lack of guarantee. 
+			§ Nevertheless, clever design has its limitations when delay is excessive, or the end-to-end throughput is limited. 
+	Application	Application-Layer Protocol	Underlying Transport Protocol
+	E-mail	SMTP [RFC 5321]	TCP
+	Remote terminal access 	Telnet [RFC 854]	TCP
+	Web	HTTP [RFC 2616]	TCP
+	File transfer	FTP [RFC 959]	TCP
+	Streaming multimedia	HTTP (e.g. Youtube)	TCP
+	Internet telephony	SIP [RFC 3261], RTP [RFC 3350] or proprietary (e.g. Skype)	UDP or TCP
+		○ E-mail, remote terminal access, web, file transfer and streaming multimedia use TCP as their underlying transport protocol because of the guaranteed reliable data transfer since they can suffer no losses 
+		○ Internet telephony applications use UDP because they can often tolerate some loss but require a minimal rate to be effective (aka circumventing TCP’s congestion control mechanism and packet overheads)
+			§ Many firewalls are configured to block (most types of) UDP traffic, so TCP is designed as a backup if UDP communication fails.
+Section 2.1.5 - Application-Layer Protocols
+	• Application-layer protocol - defines how an application’s processes, running on different end systems, pass messages to each other
+		○ Types of messages exchanged (i.e. request messages and response messages)
+		○ Syntax of the various message types (i.e. the fields in the message and how the fields are delineated)
+		○ Semantics of the fields (i.e. the meaning of the information in the fields)
+		○ Rules for determining when and how a process sends messages and responds to messages
+		○ RFC - Request for Comments publication from the Internet Engineering Task Force (IETF) and the Internet Society (ISOC), the principal technical development and standards-setting bodies for the internet
+			§ RFC 2616 - HTTP (the HyperText Transfer Protocol) - the Web’s application-layer protocol is available as an RFC so if a browser developer follows the rules of the HTTP RFC, the browser will be able to retrieve Web pages from any Web server that has also followed the rules of the HTTP RFC. 
+			§ Many other application-layer protocols (e.g. Skype) are proprietary and intentionally not available in the public domain.  
+		○ Only one piece of a network application like the Web
+			§ HTML - standard for document formats
+			§ Web Browsers - Firefox and Microsoft Internet Explorer
+			§ Web Servers - Apache and Microsoft servers
+			§ HTTP - application layer protocol
+		○ Or like e-mail
+			§ Mail servers - house user mailboxes
+			§ Mail clients - allow users to read and create messages, e.g. Microsoft Outlook
+			§ Standard for defining the structure of an e-mail message
+			§ SMTP [RFC 5321] - application layer protocol that defines how messages are passed between servers, between servers and clients and how the contents of the message headers are to be interpreted
+Section 2.1.6 - Network Applications Covered in this Book
+	• The Web and HTTP, File Transfer and FTP, E-mail and SMTP, the Internet and DNS, and finally P2P file-sharing applications
+Section 2.2 - The Web and HTTP
+	• Pre-1994 - Internet used by researchers, academics and university students to log in to remote hosts, transfer files from local hosts to remote hosts, to send/receive news and e-mail… essentially unknown outside of academic and research communities
+		○ World-Wide Web - major new application from Tim Berners-Lee in 1994 that was the first Internet application to catch the general public's eye, elevating the Internet from one of many data networks to essentially the one and only data network
+			§ Appeals to users because it operates on demand, so users receive what they want when they want it unlike radio/TV
+Section 2.2.1 - Overview of HTTP
+	• HyperText Transfer Protocol (HTTP) - the Web’s application-layer protocol that defines how Web clients request Web pages from Web servers and how servers transfer Web pages to clients
+		○ Defined in [RFC 1945] and [RFC 2616]
+		○ Implemented in two programs: a client program and a server program.  
+			§ Talk to each other by exchanging HTTP messages, though executing on different end systems. 
+			§ HTTP defines the structure of these messages and how the client and server exchange the messages.
+		○ Uses TCP as its underlying transport protocol (rather than running on top of UDP), so client first initiates a TCP connection with the server, then, once the connection is established, the browser and the server processes access TCP through their socket interfaces.
+			§ User requests a Web page (via hyperlink), browser sends HTTP request messages for objects in the page to the server, server receives the requests and responds with HTTP response messages that contain the objects
+		○ Stateless protocol - maintains no information about the clients, so server sends requested files to clients without storing any state information about the client
+	• Web page (also called a document) - consists of objects
+		○ Object - simply a file that is addressable by a single URL (e.g. an HTML file, a JPEG image, a Java applet, or a video clip)
+		○ Base HTML file - text that references the other objects in the page with the objects' URLs 
+			§ For example, if a Web page contains HTML text and five JPEG images, then the Web page has six objects: the base HTML file plus the five images. 
+		○ Each URL has two components: the hostname of the server that houses the object and the object’s path name.
+	• Web Browsers - implement the client side of HTTP, so in context of the web browser and client can be used interchangeably
+	• Web Servers - implement the server side of HTTP, and house web objects which are each addressable by a URL
+		○ Always on, with a fixed IP address, servicing requests from potentially millions of different browsers
+Section 2.2.2 - Non-persistent and Persistent Connections
+	• Client-server communications that take place for an extended period of time can be made back-to-back, periodically at regular intervals, or intermittently, and there are two design approaches with TCP:
+		○ Non-persistent connections - each client request and server response should be sent over a separate connection (url = http://www.someSchool.edu/someDepartment/home.index)
+			i. HTTP client initiates a TCP connection to server www.someschool.edu on port 80 (default for HTTP)
+			ii. HTTP client sends an HTTP request message, which includes the path name /someDepartment/home.index, to the server via its socket
+			iii. HTTP server process receives the request message via its socket, 
+			iv. HTTP server process retrieves the object /someDepartment/home.index from its storage (RAM or disk)
+			v. HTTP server process encapsulates the object in an HTTP response message and sends it to the client via its socket
+			vi. HTTP server process tells TCP to close the TCP connection
+				1) Though that doesn't happen until TCP has confirmed the client has received the response message intact
+			vii. HTTP client receives the response message, TCP connection terminates, message indicates the encapsulated object is an HTML file.
+			viii. Client process extracts the file from the response message, examines the HTML file, and finds references to the 10 JPEG objects
+			ix. Repeat steps 1-6 for each of the referenced JPEG objects
+				1) 11 TCP connections are generated, each transporting exactly one request and one response message
+				2) Most modern browsers can open 5-10 parallel TCP connections, handling one request/response pair a piece, which shortens the response time
+		○ HTTP only defines client-server communication, and has nothing to do with how a client interprets a Web page
+		○ Round-trip tie (RTT) - time it takes for a small packet to travel from client to server and then back to client (including packet-propagation delays, packet-queuing delays in intermediate routers and switches, and packet-processing delays)
+			i. User clicks on a hyperlink
+			ii. Browser initiates a TCP connection between itself and the web server (3-way handshake)
+				1) Client sends small TCP segment to the server
+				2) Server acknowledges and responds with a small TCP segment (end 1st RTT)
+				3) Client acknowledges back to the server and sends HTTP request message
+				4) Server sends HTML file into the TCP connection (end 2nd RTT)
+			iii. Total response time = 2 RTTs + transmission time at server of HTML file
+		○ Persistent connections - all of the requests and their corresponding responses should be sent over the same connection 
+			§ Default mode of HTTP
+			§ Pipelining - object requests can be made back-to-back, without waiting for replies to pending requests
+			§ Configurable timeout interval - HTTP server closes a connection when it isn't used for a certain time
+Section 2.2.3 - HTTP Message Format
+	1. HTTP Request Message
+		a. GET /somedir/page.html HTTP/1.1
+		b. Host: www.someschool.edu
+		c. Connection: close
+		d. User-agent: Mozilla/5.0
+		e. Accept-language: fr
+		○ Line 1 = request line
+			§ Method Field = GET, POST, HEAD, PUT or DELETE
+				□ GET - used when the browser requests an object, with the requested object identified in the URL field (majority of HTTP request messages)
+				□ POST - used to input data 
+				□ HEAD - similar to GET, where a server responds with an HTTP message without the requested object (useful for debugging)
+				□ PUT - allows user to upload an object to a specific path on a specific Web server (used in conjunction with Web publishing tools)
+				□ DELETE - allows a user, or application, to delete an object on a Web server
+			§ URL Field = object path
+			§ HTTP Version Field = self-explanatory
+			§ Ends with carriage return and line feed
+		○ Line 2-5 = header lines
+			§ Host - required by Web proxy caches, otherwise unnecessary since TCP connection already in place
+			§ Connection - browser tells the server a persistent/non-persistent connection preference
+			§ User-agent - the browser type making the request to the server, useful because the server can send different versions of the same object to different types of user agents
+			§ Accept-language - user prefers to receive a French version of the object
+				□ Example of a content negotiation header
+			§ Ends with carriage return and line feed
+		○ Post header lines = Entity body
+			§ Empty with GET method, but used with POST method
+				□ When user fills out a form (e.g. providing search words to a search engine)
+				□ Entity body will contain what the user entered into the form fields
+			§ Could use a GET method and include the inputted data in the requested URL
+	• HTTP Response Message
+		a. HTTP/1.1 200 OK
+		b. Connection: close
+		c. Date: Tue, 09 Aug 2011 15:44:04 GMT
+		d. Server: Apache/2.2.3 (CentOS)
+		e. Last-Modified: Tue, 09 Aug 2011 15:11:03 GMT
+		f. Content-Length: 6821
+		g. Content-Type: text/html
+		h. (data data data)
+		○ Line 1 = Status Line
+			§ Protocol Version Field
+			§ Status Code
+				□ 200 OK: Request succeeded and information returned in the response
+				□ 301 Moved Permanently: Requested object has been permanently moved, with the new URL specified in Location: header of the response message
+				□ 400 Bad Request: generic error code indicating server did not understand the request
+				□ 404 Not Found: requested document does not exist on this server
+				□ 505 HTTP Version Not Supported: requested HTTP protocol version not supported by the server
+			§ Status Message
+		○ Line 2 - 7 = Header Lines
+			§ Connection - browser tells the server a persistent/non-persistent connection preference
+			§ Date - time and date when the HTTP response was created/sent by the server
+			§ Server - the browser type making the request to the server, useful because the server can send different versions of the same object to different types of user agents
+			§ Last-modified - time and date when the object was created or last modified (critical for object caching, both in the local client and in network cache servers)
+			§ Content-Length - number of bytes in the object being sent
+			§ Content-Type - official indicator of the object type, not the file extension
+		○ Line 8 = Entity Body
+			§ Meat of the message, containing the requested object itself
+Section 2.2.4 - User-Server Interaction: Cookies
+	• Cookies - allow sites to keep track of users (which pages, in which order and at what times) by creating a unique ID, used by most major commercial Web sites, defined in [RFC 6265]
+		a. Cookie header line in the HTTP response message
+			i. Set-cookie: server creates unique ID number for a specific browser at a certain IP address
+			ii. Browser appends Set-cookie number and server hostname to list of cookie files it manages
+		b. Cookie header line in the HTTP request message
+			i. Serverhost reads cookie ID and creates cookie-specific action from backend database
+		c. Cookie file kept on the user's end system and managed by the user's browser
+		d. Back-end database at the website
+	• Cookies often simplify the Internet shopping experience for the user, they can be considered an invasion of privacy
+Section 2.2.5 - Web Caching
+	• Proxy server (web cache) - a network entity that satisfies HTTP requests on the behalf of an origin Web server with its own disk storage where it keeps copies of recently requested objects
+		a. Browser establishes a TCP connection to the Web cache and sends an HTTP request for an object to it
+		b. Web cache checks to see if it has a copy of the object stored locally
+			i. If so, it returns the object within an HTTP response message to the client browser
+			ii. If not, it opens a TCP connection to the origin server and sends an HTTP request for an object into the cache-to-server TCP connection to which the origin server sends the object within an HTTP response
+		c. When the Web cache receives the object, it stores a copy in its local storage and sends a copy, within an HTTP response message, to the client browser over the existing TCP connection
+	• A web cache acts as a server and a client at the same time
+		○ Server when receiving requests from and sending responses to a browser
+		○ Client when sending requests to and receiving responses from an origin server
+	• Two reasons for deployment:
+		a. Substantially reduces response time for client request IF bottleneck bandwidth between client and origin server is much less than the bottleneck bandwidth between the client and the cache
+		b. Substantially reduce traffic on institution's access link to the Internet, thereby reducing costs
+			i. Reduce Web traffic in the Internet as a whole
+Dynamic Host Configuration Protocol (DHCP):
+	• Allows host to obtain (or be allocated) an IP address automatically, and to learn the subnet mask, address of first-hop router (default gateway) and address of local DNS server
+		○ Either the same IP address every time or different (temporary IP address)
+	• Steps:
+		a. DHCP Server Discovery
+			i. Client sends DHCP discover message from port 68 within a UDP packet to port 67 by creating an IP datagram with broadcast destination IP address of 255.255.255.255 and a "this host" source IP address of 0.0.0.0, passing it to the link layer, and broadcasting it to all nodes on the subnet
+		b. DHCP Server Offer
+			i. Server responds with DHCP offer message broadcast to all nodes on the subnet, again using IP broadcast address of 255.255.255.255, containing transaction ID of received discover message, proposed IP address for the client, network mask and IP address lease time (amount of time address will be valid, commonly several hours/days)
+		c. DHCP Request
+			i. Newly arriving client responds to 1 of all server offers with a DHCP request message, echoing back the configuration parameters
+		d. DHCP ACK
+			i. Server responds to DHCP request message to confirm requested parameters
+	• Drawbacks:
+		○ TCP connection to a remote application cannot be maintained as a mobile node moves between subnets (unless using mobile IP extension to IP infrastructure
+
+Network Address Translation (NAT):
+	• Hides the details of the home network from the outside world, simplifying IP address allocation by translating WAN side addresses to LAN side addresses 
+		○ Realm - portions of the IP address space reserved [in RFC 1918] for a private network with private addresses, whose addresses only have meaning to the devices within that network, like 10.0.0.0/8 
+	• NAT-enabled router behaves to the outside world as a single device with a single IP address so that all traffic leaving the home router for the larger internet as the same source IP address and all traffic entering the home router has the same address for its destination address
+	• NAT Translation Table - containing IP addresses and port numbers for all internal hosts, instructs the router which host to forward a given datagram that has arrived at the NAT router from the WAN
+		○ Because a port number field is 16 bits long, the NAT protocol can support over 60,000 simultaneous connections with a single WAN-side IP address for the router!
+	• Objections:
+		○ Stopgap solution to shortage of IP addresses, instead of switching over to IPv6 which would solve the problem entirely
+		○ Interferes with P2P applications, including file-sharing and P2P VoIP because the peer behind a NAT cannot act as a server and accept TCP connections
+			§ Can be overcome via connection reversal in which the peer NOT behind a NAT can establish a TCP connection with a third peer NOT behind a NAT that also has a TCP connection established with the peer behind a NAT and ask the peer behind a NAT, via the intermediary peer, to establish a TCP connection with the first peer
+	• Universal Plug and Play (UPnP) - a protocol that allows a host to discover and configure a nearby NAT, assuming that both the host and NAT be UPnP compatible, so that external hosts can initiate communication sessions to NATed hosts (using either TCP or UDP) by mapping the private IP address and port number to a public IP address and port number
+
+Section 4.4.3: Internet Control Message Protocol (ICMP)
+	• Used by hosts and routers to communicate network layer information to each other, specified in RFC 792, most typically error reporting
+	• Architecturally lies above IP, as ICMP messages are carried inside IP datagrams just like TCP/UDP segments
+	• Ping - sends an ICMP type 8 code 0 message to the specified host, which after seeing the echo request, sends back a type 0 code 0 ICMP echo reply
+	• Source Quench - original purpose was to allow a congested router to perform congestion control by forcing a host to reduce its transmission rate, made obsolete by TCP's congestion control at the transport layer
+
+Section 4.4.4: IPv6
+	• Specified in RFC 2460, improved from IPv4 in the following ways:
+		○ Expanded addressing capabilities - increases the IP address size from 32 to 128 bits, and introduced the anycast address which allows a datagram to be delivered to any one of a group of hosts
+		○ Streamlined 40-byte header - faster processing of the IP datagram
+		○ Flow labeling and priority - certain packets can be designated as a type (audio, video, network news, ICMP, etc.) and possibly given preferential treatment
+		○ Version - 4-bit field identifies the IP version number, always 6
+		○ Fragmentation/Reassembly - IPv6 does not allow this except by the source or destination, which considerably speeds up IP forwarding
+		○ Header checksum - made redundant by transport layer and link layer checksumming, which saved time currently used to recomputed the IPv4 header checksum at each router
+		○ Options - removed to result in a fixed-length, 40-by IP header, though made into a possible next header pointed to from within the IPv6 header
+	• Tunneling - two IPv6 nodes want to communicate but are connected by IPv4 routers, so the sending IPv6 node encapsulates the entire IPv6 datagram in the payload of an IPv4 datagram and sends the IPv4 datagram to the receiving IPv6 node, which determines the IPv4 datagram contains an IPv6 datagram, extracts it, then routes the IPv6 datagram as it usually would
+
+Section 4.4.5: Brief Foray into IP Security
+	• 
